@@ -1,0 +1,19 @@
+parameters:
+  terramar.new_relic.manager.class:        Terramar\Bundle\NewRelicBundle\Manager\DefaultManager
+  terramar.new_relic.driver.default.class: Terramar\Bundle\NewRelicBundle\Driver\DefaultDriver
+  terramar.new_relic.driver.null.class:    Terramar\Bundle\NewRelicBundle\Driver\NullDriver
+
+services:
+  terramar.new_relic.driver:
+    public: false
+    class: %terramar.new_relic.driver.default.class%
+
+  terramar.new_relic.manager:
+    class: %terramar.new_relic.manager.class%
+    arguments: [ @terramar.new_relic.driver ]
+
+  terramar.new_relic.subscriber.request_lifecycle:
+    class: Terramar\Bundle\NewRelicBundle\Subscriber\RequestLifecycleSubscriber
+    arguments: [ @terramar.new_relic.manager ]
+    tags:
+      - { name: kernel.event_subscriber }
