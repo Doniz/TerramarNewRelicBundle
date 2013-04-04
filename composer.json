@@ -1,0 +1,16 @@
+{
+    "name": "terramar/newrelic-bundle",
+    "description": "Adds support for interacting with the New Relic PHP agent",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "suggest": {
+        "ext-newrelic": "Required for proper function, bundle will remain 'quiet' if the extension is not installed"
+    },
+    "autoload": {
+        "psr-0": { "Terramar\\Bundle\\NewRelicBundle": "" }
+    },
+    "target-dir": "Terramar/Bundle/NewRelicBundle"
+}
