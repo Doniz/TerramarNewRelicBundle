@@ -65,12 +65,27 @@ class DefaultManager implements ManagerInterface
     /**
      * Immediately ends the current transaction
      *
-     * Useful for long-running requests, such as file downloads, and should not be considered as taking so long.
+     * Useful for long-running requests, such as file downloads, and should not be considered
+     * as taking so long.
      *
      * @return void
      */
     public function endTransaction()
     {
         $this->driver->endTransaction();
+    }
+
+    /**
+     * Do not generate metrics for this transaction.
+     *
+     * This is useful when you have transactions that are particularly slow for known reasons
+     * and you do not want them always being reported as the transaction trace or skewing your
+     * site averages.
+     *
+     * @return void
+     */
+    public function ignoreTransaction()
+    {
+        $this->driver->ignoreTransaction();
     }
 }
