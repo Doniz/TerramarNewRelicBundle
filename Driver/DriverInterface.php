@@ -56,4 +56,16 @@ interface DriverInterface
      * @return void
      */
     public function ignoreTransaction();
+
+    /**
+     * Consider the current transaction a background job.
+     *
+     * If true as an argument is given, mark the current transaction as a background job.
+     * If false is passed as an argument, mark the transaction as a web transaction.
+     * 
+     * @param bool $isBackground
+     *
+     * @return void
+     */
+    public function setBackgroundJob($isBackground = true);
 }

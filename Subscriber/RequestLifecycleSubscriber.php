@@ -6,18 +6,19 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Terramar\Bundle\NewRelicBundle\Manager\ManagerInterface;
+use Symfony\Component\HttpKernel\KernelEvents;
+use Terramar\Bundle\NewRelicBundle\Driver\DriverInterface;
 
 class RequestLifecycleSubscriber implements EventSubscriberInterface
 {
     /**
      * Constructor
      *
-     * @param ManagerInterface $manager
+     * @param DriverInterface $driver
      */
-    public function __construct(ManagerInterface $manager)
+    public function __construct(DriverInterface $driver)
     {
-        $this->manager = $manager;
+        $this->driver = $driver;
     }
 
     /**
@@ -33,11 +34,11 @@ class RequestLifecycleSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $this->manager->setTransactionName($request->get('_route'));
+        $this->driver->setTransactionName($request->get('_route'));
     }
 
     public static function getSubscribedEvents()
     {
-        return array('kernel.controller' => 'onKernelController');
+        return array(KernelEvents::CONTROLLER => 'onKernelController');
     }
 }
